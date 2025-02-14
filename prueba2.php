@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>¿Quieres ser mi Valentín?</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #ffe6e6;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .container {
+            padding: 20px;
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        h1 {
+            color: #ff4d4d;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .gif-container {
+            margin: 20px 0;
+        }
+
+        .gif-container img {
+            max-width: 300px;
+            height: auto;
+        }
+
+        p {
+            font-size: 1.5em;
+            color: #333;
+            margin: 20px 0;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            width: 100%;
+            height: 50px;
+            position: relative;
+        }
+
+        #siBtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 1000;
+        }
+
+        #noBtn {
+            background-color: #ff4d4d;
+            color: white;
+            padding: 10px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: fixed;
+            z-index: 1000;
+        }
+
+        button:hover {
+            filter: brightness(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¿Denisse del Rosario Carrasco Loayza, quieres ser mi Valentín?</h1>
+        <div class="gif-container">
+            <img src="gifts/inicial.gif" alt="Gif romántico" id="gifImage">
+        </div>
+        <br>
+        <div class="buttons">
+            <button id="siBtn">Sí</button>
+            <button id="noBtn">No</button>
+        </div>
+        <br>
+        <br>
+        <br>
+        <p id="message">Piénsalo detenidamente...</p>
+    </div>
+
+    <script>
+        const gifImage = document.getElementById('gifImage');
+        const message = document.getElementById('message');
+        const siBtn = document.getElementById('siBtn');
+        const noBtn = document.getElementById('noBtn');
+        let scaleCount = 1;
+
+        // Array de mensajes alternativos
+        const messages = [
+            "¿Estás segura?",
+            "¿De verdad dirás que no?",
+            "Piénsalo mejor...",
+            "¡No te arrepentirás!",
+            "¡Vamos, di que sí!",
+            "Ya me estás cayendo chinche",
+            "Una última oportunidad",
+            "¿Lo harías por una Scooby galleta?",
+            "¿Quiere que le baile?",
+            "No seas así, puerko",
+        ];
+
+        function getRandomMessage() {
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+
+        function getRandomImageNumber() {
+            return Math.floor(Math.random() * 12) + 1;
+        }
+
+        function getRandomPosition() {
+            const buttonWidth = noBtn.offsetWidth;
+            const buttonHeight = noBtn.offsetHeight;
+            
+            const maxX = window.innerWidth - buttonWidth;
+            const maxY = window.innerHeight - buttonHeight;
+            
+            const randomX = Math.max(0, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(0, Math.floor(Math.random() * maxY));
+            
+            return { x: randomX, y: randomY };
+        }
+
+        // Establecer posición inicial de los botones
+        noBtn.style.position = 'relative';
+        siBtn.style.position = 'relative';
+
+        siBtn.addEventListener('click', () => {
+            gifImage.src = "gifts/success.gif";
+            message.textContent = "¡Sabía que dirías que sí, puerkito!!! ❤️";
+            siBtn.style.display = 'none';
+            noBtn.style.display = 'none';
+        });
+
+        noBtn.addEventListener('click', () => {
+            // Aumentar tamaño del botón Sí
+            scaleCount += 0.2;
+            siBtn.style.transform = `scale(${scaleCount})`;
+            
+            // Cambiar mensaje e imagen
+            message.textContent = getRandomMessage();
+            gifImage.src = `gifts/${getRandomImageNumber()}.gif`;
+            
+            // Mover el botón No
+            const newPosition = getRandomPosition();
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${newPosition.x}px`;
+            noBtn.style.top = `${newPosition.y}px`;
+        });
+
+        window.addEventListener('resize', () => {
+            if (noBtn.style.position === 'fixed') {
+                const newPosition = getRandomPosition();
+                noBtn.style.left = `${newPosition.x}px`;
+                noBtn.style.top = `${newPosition.y}px`;
+            }
+        });
+    </script>
+</body>
+</html>
