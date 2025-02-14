@@ -88,7 +88,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>¿Denisse del Rosario Carrasco Loayza, quieres ser mi Valentín?</h1>
+        <h1 id="titulo">¿Denisse del Rosario Carrasco Loayza, quieres ser mi Valentín?</h1>
         <div class="gif-container">
             <img src="gifts/inicial.gif" alt="Gif romántico" id="gifImage">
         </div>
@@ -151,9 +151,10 @@
 
         siBtn.addEventListener('click', () => {
             gifImage.src = "gifts/success.gif";
-            message.textContent = "¡Sabía que dirías que sí, puerkito!!! ❤️";
+            titulo.textContent = "¡Sabía que dirías que sí, puerkito!!! ❤️";
             siBtn.style.display = 'none';
             noBtn.style.display = 'none';
+            message.style.display='none';
         });
 
         noBtn.addEventListener('click', () => {
